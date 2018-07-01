@@ -1,1 +1,95 @@
+^F1::
+{
+	Reload
+return
+}
 
+$q::
+{
+	gosub arrows
+	move(left,500)
+	jump2(right,down,600,2)
+	circle(up,right,down,left,150)
+	circle(up,right,down,left,250)
+	return
+}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;MOVIMIENTOS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+move(dir, tiempo)
+{
+	SendInput %dir% down}
+	Sleep, %tiempo%
+	SendInput %dir% up}
+return
+}
+
+jump(tiempo)
+{
+	SendInput {x down}
+	Sleep, 150
+	SendInput {x up}
+	Sleep, %tiempo%
+return
+}
+
+jump1(dir,tiempo, x:=1)
+{
+	Loop, %x%
+	{
+		SendInput %dir% down}
+		Sleep, 100
+		jump(tiempo)
+		SendInput %dir% up}
+	}
+return
+}
+
+jump2(dir1,dir2,tiempo,veces:=1)
+{
+	Loop, %veces%
+	{
+		SendInput %dir1% down}
+		SendInput %dir2% down}
+		Sleep, 50
+		jump(tiempo)
+		SendInput %dir2% up}
+		SendInput %dir1% up}
+	}
+return
+}
+
+giro(dir1, dir2, tiempo)
+{
+	SendInput %dir1% down}
+	Sleep, %tiempo%
+	SendInput %dir2% down}
+	Sleep, %tiempo%
+	SendInput %dir1% up}
+	Sleep, %tiempo%
+	SendInput %dir2% up}
+return
+}
+
+circle(dir1, dir2, dir3, dir4, ratio)
+{
+	gosub arrows
+	giro(dir1,dir2,ratio)
+	giro(dir2,dir3,ratio)
+	giro(dir3,dir4,ratio)
+	giro(dir4,dir1,ratio)	
+return
+}
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;SUBRUTINAS
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+arrows:
+	down:="{Down"
+	left:="{Left"
+	right:="{Right"
+	up:="{Up"
+return
